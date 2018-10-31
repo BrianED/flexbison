@@ -3,7 +3,7 @@ XXX XX.
 X _GH1.
 X 1GH1.
 XXX XY-1.
-XXXX Y.
+XXXX YXX.
 XXXX Z.
 
 BODY.
