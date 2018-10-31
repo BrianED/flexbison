@@ -21,7 +21,7 @@ END			{ printf("End:%s ", yytext); }
 ^X+			{ printf("Variable size:%s ", yytext); }
 ;			{ printf("Semicolon:%s ", yytext); }
 [0-9]+			{ printf("Integer:%s ", yytext); }
-[a-zA-Z0-9\-]*[X]{2,}[a-zA-Z0-9\-]* { printf("Invalid Identifier:%s ", yytext); }
+[X]{2,}[a-zA-Z0-9\-]* 	{ printf("Invalid Identifier:%s ", yytext); }
 [a-zA-Z][a-zA-Z0-9\-]*	{ printf("Identifier:%s ", yytext); }
 [0-9]+[a-zA-Z0-9\-]*	{ printf("Invalid Identifier:%s ", yytext); }
 \"(\\.|[^"\\])*\"	{ printf("String:%s ", yytext); }
