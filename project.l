@@ -10,21 +10,20 @@ List of patterns and actions
 */
 %%
 [ \t]+			/* Ignore whitespace */
-BEGINING		{ printf("Begining:%s ", yytext); }
-BODY			{ printf("Body:%s ", yytext); }
-PRINT			{ printf("Print:%s ", yytext); }
-INPUT			{ printf("Input:%s ", yytext); }
-MOVE			{ printf("Move:%s ", yytext); }
-ADD			{ printf("Add:%s ", yytext); }
-TO			{ printf("To:%s ", yytext); }
-END			{ printf("End:%s ", yytext); }
+BEGINING |
+BODY |
+PRINT |
+INPUT |
+MOVE |
+ADD |
+TO |
+END			{ printf("%s Keyword ", yytext); }
 ^X+			{ printf("Variable size:%s ", yytext); }
 ;			{ printf("Semicolon:%s ", yytext); }
-[0-9]+			{ printf("Integer:%s ", yytext); }
-[X]{2,}[a-zA-Z0-9\-]* 	{ printf("Invalid Identifier:%s ", yytext); }
+[Xx]{2,}[a-zA-Z0-9\-]* 	{ printf("Invalid Identifier:%s ", yytext); }
 [a-zA-Z][a-zA-Z0-9\-]*	{ printf("Identifier:%s ", yytext); }
 [0-9]+[a-zA-Z0-9\-]*	{ printf("Invalid Identifier:%s ", yytext); }
-\"(\\.|[^"\\])*\"	{ printf("String:%s ", yytext); }
+\"[^\"]*\"		{ printf("String:%s ", yytext); }
 \.			{ printf("Terminator:%s ", yytext); }
 .			{ printf("Invalid:%s ", yytext); }
 %%
