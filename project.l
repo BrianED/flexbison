@@ -1,44 +1,31 @@
 /*
-Declarations and options
+	Brian Dooley - 15123529
 */
 %{
-
+	#include "project.tab.h"
 %}
+/*
+	yytext stores text matched by current token
+	yylval stores value and returns to bison
+	noyywrap removes calls to yywrap
+*/
+%option noyywrap
 
-/*
-List of patterns and actions
-*/
 %%
-[ \t]+			/* Ignore whitespace */
-BEGINING |
-BODY |
-PRINT |
-INPUT |
-MOVE |
-ADD |
-TO |
-END			{ printf("%s Keyword ", yytext); }
-^X+			{ printf("Variable size:%s ", yytext); }
-;			{ printf("Semicolon:%s ", yytext); }
-[Xx]{2,}[a-zA-Z0-9\-]* 	{ printf("Invalid Identifier:%s ", yytext); }
-[a-zA-Z][a-zA-Z0-9\-]*	{ printf("Identifier:%s ", yytext); }
-[0-9]+[a-zA-Z0-9\-]*	{ printf("Invalid Identifier:%s ", yytext); }
-\"[^\"]*\"		{ printf("String:%s ", yytext); }
-\.			{ printf("Terminator:%s ", yytext); }
-.			{ printf("Invalid:%s ", yytext); }
+[\t\n ]+
+BEGINING		{ return BEGINING; }
+BODY			{ return BODY; }
+PRINT			{ return PRINT; }
+INPUT			{ return INPUT; }
+MOVE			{ return MOVE; }
+ADD			{ return ADD; }
+TO			{ return TO; }
+END			{ return END; }
+[Xx]+			{ yylval.size = strlen(yytext); return VARIABLE_SIZE; }
+;			{ return SEMICOLON; }
+[0-9]+			{ yylval.size = atoi(yytext); return INTEGER; }
+[a-zA-Z][a-zA-Z0-9\-]*	{ yylval.identifier = yytext; return IDENTIFIER; }
+\"[^\"]*\"		{ return STRING; }
+\.			{ return TERMINATOR; }
+.			{ return EXIT_SUCCESS; }
 %%
-
-/*
-C code copied to generated scanner
-*/
-int main(int argc, char* argv[]) {
-/*
-	if (argc > 1) {
-		if (!(yyin = fopen(argv[1], "r"))) {
-			perror(argv[1]);
-			return (1);
-		}
-	}
-*/
-	yylex();
-}
